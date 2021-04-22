@@ -36,9 +36,9 @@ $datafile_verbrauch_monthly = $basedir."/smart_data/smart_meter_verbrauch_summar
 ########################################################################################
 # solar production and power configuration
 ########################################################################################
-$datafile_solar = $basedir."/".$file_prefix_current."116300250339.data";
-$datafile_solar_daily = $basedir."/".$file_prefix_daily."116300250339.data";
-$datafile_solar_monthly = $basedir."/".$file_prefix_monthly."116300250339.data";
+$datafile_solar = $basedir."/dect_data/".$file_prefix_current."116300250339.data";
+$datafile_solar_daily = $basedir."/dect_data/".$file_prefix_daily."116300250339.data";
+$datafile_solar_monthly = $basedir."/dect_data/".$file_prefix_monthly."116300250339.data";
 
 ########################################################################################
 # power consumption configuration
@@ -59,9 +59,9 @@ $files_monthly = array();
 $current_files = array();
 
 for ($i=0;$i<sizeof($ains);$i++) {
-	array_push($files, $basedir."/".$file_prefix_daily.$ains[$i].".data");
-	array_push($files_monthly, $basedir."/".$file_prefix_monthly.$ains[$i].".data");
-	array_push($current_files, $basedir."/".$file_prefix_current.$ains[$i].".data");
+	array_push($files, $basedir."/dect_data/".$file_prefix_daily.$ains[$i].".data");
+	array_push($files_monthly, $basedir."/dect_data/".$file_prefix_monthly.$ains[$i].".data");
+	array_push($current_files, $basedir."/dect_data/".$file_prefix_current.$ains[$i].".data");
 }
 
 ?>
