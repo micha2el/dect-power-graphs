@@ -31,7 +31,7 @@ while ($line = fgets($fh)) {
 	$single = (int)substr($line_array[1],2);
 	if (is_numeric($single)) {
 		array_push($points,$single);
-		$single_date = ((int)substr(substr($line_array[0],2),0,10))+3600;
+		$single_date = ((int)substr(substr($line_array[0],2),0,10));
 		array_push($dates,$single_date);
 		if (sizeof($zero_line_dates) == 0){
 			array_push($zero_line_dates, $single_date);

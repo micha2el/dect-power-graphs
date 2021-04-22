@@ -29,7 +29,7 @@ while ($line = fgets($fh)) {
 	$single = substr($line_array[1],2);
 	if (is_numeric($single)) {
 		array_push($points,($single/1000));
-		array_push($dates, date("d.m H:i",((int)substr($line_array[3],2))+3600));
+		array_push($dates, date("d.m H:i",((int)substr($line_array[3],2))));
 	}
 }
 fclose($fh);
