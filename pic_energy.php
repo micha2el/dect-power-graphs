@@ -1,14 +1,14 @@
 <?php
-$jpgraph_dir = "/usr/share/jpgraph/";
-$datafile = "dect.xml";
-$number_of_devices = 4;
-$colors = array("blue","green","black","red");
+include("config.php");
+
 $max_y = 1000;
 $graph_name = "Leistung";
 $graph_y_axis = "Leistung in W";
 $graph_x_axis = "Zeit";
 
-### no more config below
+########################################################################################
+# no more config below
+########################################################################################
 
 require_once ($jpgraph_dir."jpgraph.php");
 require_once ($jpgraph_dir."jpgraph_log.php");
@@ -44,16 +44,16 @@ $graph->SetScale("textlog");
 
 // Create the linear plot
 $lineplot0=new LinePlot($outputs[0]);
-$lineplot0->SetColor("blue");
+$lineplot0->SetColor($colors_dect[0]);
 $lineplot0->SetLegend($names[0]);
 $lineplot1=new LinePlot($outputs[1]);
-$lineplot1->SetColor($colors[1]);
+$lineplot1->SetColor($colors_dect[1]);
 $lineplot1->SetLegend($names[1]);
 $lineplot2=new LinePlot($outputs[2]);
-$lineplot2->SetColor($colors[2]);
+$lineplot2->SetColor($colors_dect[2]);
 $lineplot2->SetLegend($names[2]);
 $lineplot3=new LinePlot($outputs[3]);
-$lineplot3->SetColor($colors[3]);
+$lineplot3->SetColor($colors_dect[3]);
 $lineplot3->SetLegend($names[3]);
 
 // Add the plot to the graph

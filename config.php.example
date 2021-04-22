@@ -1,0 +1,59 @@
+<?php
+
+########################################################################################
+# jpgraph base directory
+########################################################################################
+$jpgraph_dir = "/usr/share/jpgraph/";
+
+########################################################################################
+# base directory and file configuration
+########################################################################################
+$basedir = "/var/www/dect";
+$file_prefix_current = "dect_30secs_";
+$file_prefix_daily = "dect_daily_";
+$file_prefix_monthly = "dect_monthly_";
+
+########################################################################################
+# energy and temperatur configuration and index.php configuration
+########################################################################################
+$use_smart_meter = false;
+$use_solar_power = true;
+$use_blocks = false;
+$datafile = "dect.xml";
+$number_of_devices = 4;
+$colors_dect = array("blue","green","black","red");
+$data_smart_power = $basedir."/smart_data/smart_meter_power.data";
+$data_smart_verbrauch = $basedir."/smart_data/smart_meter_verbrauch.data";
+$data_smart_einspeise = $basedir."/smart_data/smart_meter_einspeise.data";
+
+########################################################################################
+# solar production and power configuration
+########################################################################################
+$datafile_solar = $basedir."/".$file_prefix_current."116300250339.data";
+$datafile_solar_daily = "/var/www/dect/dect_daily_116300250339.data";
+
+########################################################################################
+# power consumption configuration
+########################################################################################
+$ains = array("116300172651","116300146166","116300176784");
+$names = array("TV","Server","Computer");
+$colors = array("green","blue","red");
+
+
+
+
+########################################################################################
+# no configuration below - automatic variable generation !!!
+########################################################################################
+
+$files = array();
+$files_monthly = array();
+$current_files = array();
+
+for ($i=0;$i<sizeof($ains);$i++) {
+	array_push($files, $basedir."/".$file_prefix_daily.$ains[$i].".data");
+	array_push($files_monthly, $basedir."/".$file_prefix_monthly.$ains[$i].".data");
+	array_push($current_files, $basedir."/".$file_prefix_current.$ains[$i].".data");
+}
+
+?>

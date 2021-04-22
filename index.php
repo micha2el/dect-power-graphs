@@ -1,17 +1,16 @@
 <?php
+
+include("config.php");
+
+########################################################################################
+## config variables
+########################################################################################
 $debug = false;
-$datafile = "dect.xml";
-$use_smart_meter = false;
-$use_solar_power = true;
-$use_blocks = false;
 $scale = 1000;
 
-## for smart meter use
-$data_smart_power = "/var/www/html/smart_data/smart_meter_power.data";
-$data_smart_verbrauch = "/var/www/html/smart_data/smart_meter_verbrauch.data";
-$data_smart_einspeise = "/var/www/html/smart_data/smart_meter_einspeise.data";
-######################
-# no more config below
+########################################################################################
+## no more config below
+########################################################################################
 $file = simplexml_load_file($datafile);
 $output = "";
 

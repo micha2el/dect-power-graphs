@@ -1,16 +1,18 @@
 <?php
-$jpgraph_dir = "/usr/share/jpgraph/";
+
+include("config.php");
+
 $scale = 1;
 $graph_scale = 1250;
-$datafile = "/var/www/dect/dect_daily_116300250339.data";
-$current_solar = "/var/www/dect/dect_30secs_116300250339.data";
 $graph_name = "Stromerzeugung";
 $graph_x_axis = "Zeit";
 $graph_y_axis = "Stromerzeugung in Wh";
 $graph_y_big_tick = 100;
 $graph_y_small_tick = 50;
 
+########################################################################################
 # no more config below
+########################################################################################
 
 require_once ($jpgraph_dir."jpgraph.php");
 require_once ($jpgraph_dir."jpgraph_log.php");
@@ -24,7 +26,7 @@ $xaxis = array();
 $last_triple = array();
 $counter = 0;
 
-$fh = fopen($datafile,"r");
+$fh = fopen($datafile_solar_daily,"r");
 $firstvalue = 0;
 $lastvalue = 0;
 while ($line = fgets($fh)) {
@@ -53,7 +55,7 @@ for ($i=0;$i<sizeof($xaxis);$i++){
 }
 // add current values
 array_push($xaxis, date('d-m-Y', time()));
-$f = fopen($current_solar, "r");
+$f = fopen($datafile_solar, "r");
 $cursor = -1;
 $lastline = "";
 fseek($f, $cursor, SEEK_END);

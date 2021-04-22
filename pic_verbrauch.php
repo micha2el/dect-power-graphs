@@ -1,18 +1,17 @@
 <?php
-$jpgraph_dir = "/usr/share/jpgraph/";
+
+include("config.php");
 
 $scale = 1000;
 $graph_scale = 5;
 $show_only_values = 14;
-$files = array("/var/www/dect/dect_daily_116300172651.data","/var/www/dect/dect_daily_116300146166.data","/var/www/dect/dect_daily_116300176784.data");
-$current_files = array("/var/www/dect/dect_30secs_116300172651.data","/var/www/dect/dect_30secs_116300146166.data","/var/www/dect/dect_30secs_116300176784.data");
-$names = array("TV","Server","Computer");
-$colors = array("green","blue","red");
 $graph_name = "Stromverbrauch (".$show_only_values." Tage)";
 $graph_x_axis = "Zeit";
 $graph_y_axis = "Stromverbrauch in kWh";
 
-###### no config more config below
+########################################################################################
+# no config more config below
+########################################################################################
 
 require_once ($jpgraph_dir."jpgraph.php");
 require_once ($jpgraph_dir."jpgraph_log.php");

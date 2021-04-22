@@ -1,12 +1,15 @@
 <?php
-$jpgraph_dir = "/usr/share/jpgraph/";
-$datafile = "/var/www/dect/dect_30secs_116300250339.data";
+
+include("config.php");
+
 $data_size = 2880;
-$graph_name = "Leistung Solaranlage (woechentlich)";
+$graph_name = "Leistung Solaranlage (taeglich)";
 $graph_x_axis = "Zeit";
 $graph_y_axis = "Leistung in W";
 
-#no more confie below
+########################################################################################
+# no more config below
+########################################################################################
 
 require_once ($jpgraph_dir."jpgraph.php");
 require_once ($jpgraph_dir."jpgraph_log.php");
@@ -16,7 +19,7 @@ $yaxis = array();
 $xaxis = array();
 $counter = 0;
 
-$fh = fopen($datafile,"r");
+$fh = fopen($datafile_solar,"r");
 $points = array();
 while ($line = fgets($fh)) {
 	$line_array = explode(",",$line);

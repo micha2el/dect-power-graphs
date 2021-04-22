@@ -1,14 +1,15 @@
 <?php
-$jpgraph_dir = "/usr/share/jpgraph/";
-$datafile = "dect.xml";
-$number_of_devices = 4;
-$colors = array("blue","green","black","red");
+include("config.php");
+
 $max_temp = 35;
 $graph_name = "Temperatur";
 $graph_x_axis = "Zeit";
 $graph_y_axis = "Temperatur in C";
 
-###### no config beyond here
+########################################################################################
+# no config below
+########################################################################################
+
 require_once ($jpgraph_dir."jpgraph.php");
 require_once ($jpgraph_dir."jpgraph_line.php");
 
@@ -42,22 +43,22 @@ $graph->SetScale("textlin",0,$max_temp);
 #for ($i=0;$i<sizeof($outputs);$i++){
 #	$lineplot = null;
 #	$lineplot = new LinePlot($outputs[$i]);
-#	$lineplot->SetColor($colors[$i]);
+#	$lineplot->SetColor($colors_dect[$i]);
 #	$lineplot->SetLegend($names[$i]);
 #	$graph->Add($lineplot);
 #}
 
 $lineplot0=new LinePlot($outputs[0]);
-$lineplot0->SetColor("blue");
+$lineplot0->SetColor($colors_dect[0]);
 $lineplot0->SetLegend($names[0]);
 $lineplot1=new LinePlot($outputs[1]);
-$lineplot1->SetColor("green");
+$lineplot1->SetColor($colors_dect[1]);
 $lineplot1->SetLegend($names[1]);
 $lineplot2=new LinePlot($outputs[2]);
-$lineplot2->SetColor("black");
+$lineplot2->SetColor($colors_dect[2]);
 $lineplot2->SetLegend($names[2]);
 $lineplot3=new LinePlot($outputs[3]);
-$lineplot3->SetColor("red");
+$lineplot3->SetColor($colors_dect[3]);
 $lineplot3->SetLegend($names[3]);
 
 $graph->Add($lineplot0);

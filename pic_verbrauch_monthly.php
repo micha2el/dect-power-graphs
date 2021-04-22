@@ -1,18 +1,18 @@
 <?php
-$jpgraph_dir = "/usr/share/jpgraph/";
+
+include("config.php");
+
 $scale = 1000;
 $graph_scale = 100;
-$files = array("/var/www/dect/dect_monthly_116300172651.data","/var/www/dect/dect_monthly_116300146166.data","/var/www/dect/dect_monthly_116300176784.data");
-$current_files = array("/var/www/dect/dect_30secs_116300172651.data","/var/www/dect/dect_30secs_116300146166.data","/var/www/dect/dect_30secs_116300176784.data");
-$names = array("TV","Server","Computer");
-$colors = array("green","blue","red");
 $graph_name = "Stromverbrauch";
 $graph_y_axis = "Stromverbrauch in kwh";
 $graph_x_axis = "Zeit";
 $graph_y_big_tick = 20;
 $graph_y_small_tick = 10;
 
+########################################################################################
 # no more config below
+########################################################################################
 
 require_once ($jpgraph_dir."jpgraph.php");
 require_once ($jpgraph_dir."jpgraph_log.php");
@@ -25,8 +25,8 @@ $last_triple = array();
 $counter = 0;
 
 $outputs = array();
-for ($i=0;$i<sizeof($files);$i++) {
-	$fh = fopen($files[$i],"r");
+for ($i=0;$i<sizeof($files_monthly);$i++) {
+	$fh = fopen($files_monthly[$i],"r");
 	$firstvalue = -1;
 	$lastvalue = 0;
 	$inner_dates = array();
