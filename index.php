@@ -79,9 +79,15 @@ if ($use_smart_meter) {
 	$output.='<img src="pic_verbrauch.php" />';
 	$output.='<img src="pic_verbrauch_monthly.php" />';
 }
+if ($show_energy_consumption) {
+	$output.='<img src="pic_energy_consumption_daily.php" />';
+	$output.='<img src="pic_energy_consumption_monthly.php" />';
+}
 if ($use_solar_power) {
 	$output.='<img src="pic_solar_power.php" />';
 	$output.='<img src="pic_solar_power_daily.php" />';
+}
+if ($use_solar_production) {
 	$output.='<img src="pic_solar_production.php" />';
 	#$output.='<img src="pic_solar_production_monthly.php" />';
 }

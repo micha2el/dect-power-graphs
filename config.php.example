@@ -18,19 +18,27 @@ $file_prefix_monthly = "dect_monthly_";
 ########################################################################################
 $use_smart_meter = false;
 $use_solar_power = true;
+$use_solar_production = false;
+$show_energy_consumption = false;
 $use_blocks = false;
 $datafile = "dect.xml";
 $number_of_devices = 4;
 $colors_dect = array("blue","green","black","red");
+$data_smart = $basedir."/smart_data/smart_meter_power_history.data";
 $data_smart_power = $basedir."/smart_data/smart_meter_power.data";
 $data_smart_verbrauch = $basedir."/smart_data/smart_meter_verbrauch.data";
 $data_smart_einspeise = $basedir."/smart_data/smart_meter_einspeise.data";
+$datafile_einspeise = $basedir."/smart_data/smart_meter_einspeise_summary.data";
+$datafile_verbrauch = $basedir."/smart_data/smart_meter_verbrauch_summary.data";
+$datafile_einspeise_monthly = $basedir."/smart_data/smart_meter_einspeise_summary_monthly.data";
+$datafile_verbrauch_monthly = $basedir."/smart_data/smart_meter_verbrauch_summary_monthly.data";
 
 ########################################################################################
 # solar production and power configuration
 ########################################################################################
 $datafile_solar = $basedir."/".$file_prefix_current."116300250339.data";
-$datafile_solar_daily = "/var/www/dect/dect_daily_116300250339.data";
+$datafile_solar_daily = $basedir."/".$file_prefix_daily."116300250339.data";
+$datafile_solar_monthly = $basedir."/".$file_prefix_monthly."116300250339.data";
 
 ########################################################################################
 # power consumption configuration
