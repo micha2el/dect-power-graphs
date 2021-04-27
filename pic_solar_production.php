@@ -3,7 +3,7 @@
 include("config.php");
 
 $scale = 1;
-$graph_scale = 1250;
+$graph_scale = 1500;
 $graph_name = "Stromerzeugung";
 $graph_x_axis = "Zeit";
 $graph_y_axis = "Stromerzeugung in Wh";
@@ -84,7 +84,11 @@ $barplot->SetWidth(2);
 $barplot->SetFillColor("navy");
 $barplot->SetColor("navy");
 $barplot->ShowValue(true);
-$barplot->SetValueFormat("%01.2f",90);
+if ($scale==1) {
+	$barplot->SetValueFormat("%01.0f",90);
+}else{
+	$barplot->SetValueFormat("%01.2f",90);
+}
 $gbplot = new GroupBarPlot(array($barplot));
 $graph->Add($gbplot);
 

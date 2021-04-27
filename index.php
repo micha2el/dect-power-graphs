@@ -89,7 +89,7 @@ if ($use_solar_power) {
 }
 if ($use_solar_production) {
 	$output.='<img src="pic_solar_production.php" />';
-	#$output.='<img src="pic_solar_production_monthly.php" />';
+	$output.='<img src="pic_solar_production_monthly.php" />';
 }
 $output.='<img src="pic_energy.php" />';
 $output.='<img src="pic_temp.php" />';
