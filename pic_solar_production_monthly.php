@@ -29,12 +29,12 @@ $counter = 0;
 $lastvalue = 0;
 if (file_exists($datafile_solar_monthly)) {
 	$fh = fopen($datafile_solar_monthly,"r");
-	$firstvalue = 0;
+	$firstvalue = -1;
 	while ($line = fgets($fh)) {
 		$line_array = explode(",",$line);
 		$singledata= ((substr($line_array[2],2))/$scale);
 		$lastvalue = $singledata;
-		if ($firstvalue == 0) {
+		if ($firstvalue == -1) {
 			$firstvalue = $singledata;
 		}else {
 			$currentdata = ($singledata-$firstvalue);
@@ -49,7 +49,7 @@ if (file_exists($datafile_solar_monthly)) {
 }
 array_push($last_triple, $lastvalue);
 
-for ($i=0;$i<100;$i++){
+for ($i=0;$i<200;$i++){
 	$yaxis[$i] = $i;
 }
 // correct dates
@@ -74,7 +74,6 @@ while ($char !== false && $char !== "\n" && $char !== "\r") {
 $lastline = explode(",",$lastline);
 $inner = ((substr($lastline[2],2))/$scale) - $last_triple[0];
 array_push($data, $inner);
-
 $graph = new Graph(1000,300,"auto");
 $graph->SetScale("textlin",0,$graph_scale);
 $graph->yscale->ticks->Set($graph_y_big_tick,$graph_y_small_tick);
@@ -95,6 +94,7 @@ $graph->title->Set($graph_name);
 $graph->xaxis->title->Set($graph_x_axis);
 $graph->yaxis->title->Set($graph_y_axis);
 $graph->xaxis->SetTickLabels($xaxis);
+$graph->yaxis->SetTickLabels($yaxis);
 $graph->yaxis->SetTitleMargin(35);
 $graph->yaxis->SetWeight(2);
 $graph->yaxis->SetColor("red");
