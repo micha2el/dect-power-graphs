@@ -24,14 +24,30 @@ $counter = 0;
 $fh = fopen($datafile_solar,"r");
 $points = array();
 $dates = array();
-while ($line = fgets($fh)) {
-	$line_array = explode(",",$line);
-	$single = substr($line_array[1],2);
-	if (is_numeric($single)) {
-		array_push($points,($single/1000));
-		array_push($dates, date("d.m H:i",((int)substr($line_array[3],2))));
+$pos = -1;
+$lines = array();
+$lineCounter = 0;
+// since we have big data we need to read from the end of the file
+while ((-1 !== fseek($fh, $pos, SEEK_END)) && ($lineCounter < $data_size)) {
+	$char = fgetc($fh);
+	if (PHP_EOL == $char) {
+		$line_array = explode(",",$currentLine);
+		$single = substr($line_array[1],2);
+		if (is_numeric($single)) {
+			array_push($points,($single/1000));
+			array_push($dates, date("d.m H:i",((int)substr($line_array[3],2))));
+		}
+		$currentLine = '';
+		$lineCounter++;
+	} else {
+		$currentLine = $char . $currentLine;
 	}
+	$pos--;
 }
+
+$points = array_reverse($points);
+$dates = array_reverse($dates);
+
 fclose($fh);
 
 for ($i=sizeof($points)-1;$i>(sizeof($points)-$data_size)&&$i>-1;$i=$i-$scale_factor){

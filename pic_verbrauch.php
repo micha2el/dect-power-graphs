@@ -37,7 +37,11 @@ for ($i=0;$i<sizeof($files);$i++) {
 		if ($firstvalue == -1) {
 			$firstvalue = $singledata;
 		}else {
-			$currentdata = ($singledata-$firstvalue);
+			// check if current value is below previous value (dect counter could be reseted)
+			if ($singledata < $firstvalue)
+				$currentdata = $singledata;
+			else
+				$currentdata = ($singledata-$firstvalue);
 			array_push($inner_data,$currentdata);
 			array_push($inner_dates,date('d-m-Y H:i:s', (int)substr($line_array[3],2)));
 			if ($i==0) {
@@ -106,7 +110,12 @@ for ($z=0;$z<sizeof($current_files);$z++) {
 		$char = fgetc($f);
 	}
 	$lastline = explode(",",$lastline);
-	$inner = ((substr($lastline[2],2))/$scale) - $last_triple[$z];
+	$curvalue = ((substr($lastline[2],2))/$scale);
+	// check if there was a reset within the data - then we need to start with the new value
+	if ($curvalue < $last_triple[$z])
+		$inner = $curvalue;
+	else
+		$inner = $curvalue - $last_triple[$z];
 	array_push($outputs[$z], $inner);
 }
 #for ($i=0;$i<sizeof($outputs);$i++){

@@ -4,7 +4,8 @@ include("config.php");
 
 $scale = 1;
 $graph_scale = 1500;
-$graph_name = "Stromerzeugung";
+$nr_days = 31;
+$graph_name = "Stromerzeugung (".$nr_days." Tage)";
 $graph_x_axis = "Zeit";
 $graph_y_axis = "Stromerzeugung in Wh";
 $graph_y_big_tick = 100;
@@ -79,6 +80,10 @@ $graph->yscale->ticks->Set($graph_y_big_tick,$graph_y_small_tick);
 
 $data = array_reverse($data);
 $xaxis = array_reverse($xaxis);
+
+$data = array_slice($data,0,$nr_days);
+$xaxis = array_slice($xaxis,0,$nr_days);
+
 $barplot=new BarPlot($data);
 $barplot->SetWidth(2);
 $barplot->SetFillColor("navy");
