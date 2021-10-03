@@ -84,7 +84,7 @@ for ($i=0;$i<$graph_scale;$i++){
 }
 // correct dates
 for ($i=0;$i<sizeof($xaxis);$i++){
-	$xaxis[$i] = date('M Y',(strtotime(substr($xaxis[$i],0,10))+10));
+	$xaxis[$i] = date('M Y',(strtotime(substr($xaxis[$i],0,10))-10));
 }
 // add current values
 array_push($xaxis, date('M Y', time()));
