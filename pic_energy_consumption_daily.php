@@ -160,7 +160,7 @@ array_push($data4, $inner - end($data2));
 
 // Create the graph. These two calls are always required
 $graph = new Graph(1000,300,"auto");
-$graph->SetScale("textlin",0,11);
+$graph->SetScale("textlin",0,$graph_energy_y_scale);
 
 // Create the linear plot
 $data = array_reverse($data);

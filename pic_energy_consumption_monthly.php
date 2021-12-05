@@ -160,7 +160,7 @@ array_push($data4, $inner - end($data2));
 
 // Create the graph. These two calls are always required
 $graph = new Graph(1000,300,"auto");
-$graph->SetScale("textlin",0,175);
+$graph->SetScale("textlin",0,$graph_energy_monthly_y_scale);
 $graph->yscale->ticks->Set(10,5);
 
 // Create the linear plot
