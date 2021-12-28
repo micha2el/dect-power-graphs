@@ -19,6 +19,7 @@ $file_prefix_monthly = "dect_monthly_";
 $use_smart_meter = false;
 $use_solar_power = true;
 $use_solar_production = false;
+$use_heating_temp = false;
 $show_energy_consumption = false;
 $use_blocks = false;
 $datafile = "dect_data/dect.xml";

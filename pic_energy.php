@@ -17,15 +17,17 @@ require_once ($jpgraph_dir."jpgraph_line.php");
 $outputs = array();
 $names = array();
 $file = simplexml_load_file($datafile);
-for ($i=0;$i<$number_of_devices;$i++) {
-	$data = explode(",",$file->device[$i]->devicestats->power->stats);
-	$name = $file->device[$i]->attributes()->name;
-	for ($j=0;$j<sizeof($data);$j++){
-		$data[$j] = $data[$j]/100;
-		if ($data[$j] < 1) $data[$j] = 0;
+for ($i=0;$i<sizeof($file->device);$i++) {
+	if ($file->device[$i]->attributes()->type == "1") {
+		$data = explode(",",$file->device[$i]->devicestats->power->stats);
+		$name = $file->device[$i]->attributes()->name;
+		for ($j=0;$j<sizeof($data);$j++){
+			$data[$j] = $data[$j]/100;
+			if ($data[$j] < 1) $data[$j] = 0;
+		}
+		array_push($outputs, $data);
+		array_push($names, $name);
 	}
-	array_push($outputs, $data);
-	array_push($names, $name);
 }
 
 $yaxis = array();
@@ -46,9 +48,15 @@ $graph->SetScale("textlog");
 $plots = array();
 for ($i=0;$i<sizeof($outputs);$i++){
         array_push($plots, new LinePlot($outputs[$i]));
-        end($plots)->SetColor($colors_dect[$i]);
+        if (isset($colors_dect) && sizeof($colors_dect)>$i) {
+		end($plots)->SetColor($colors_dect[$i]);
+	}else{
+		end($plots)->SetColor("#".substr(md5(rand()), 0, 6));
+	}
         end($plots)->SetLegend($names[$i]);
-        $graph->Add(end($plots));
+}
+for ($i=0;$i<sizeof($plots);$i++){
+        $graph->Add($plots[$i]);
 }
 
 $graph->img->SetMargin(60,140,30,60);

@@ -55,15 +55,24 @@ if ($use_smart_meter) {
 }
 
 for ($i=0;$i<sizeof($file->device);$i++){
-	$temps.=$file->device[$i]->attributes()->name.": ".$file->device[$i]->temp." °C<br>";
-	$leistungen.=$file->device[$i]->attributes()->name.": ".(($file->device[$i]->strom)/$scale)." W<br>";
-	$verbrauch.=$file->device[$i]->attributes()->name.": ".(($file->device[$i]->verbrauch)/$scale)." kWh<br>";
+	if ($file->device[$i]->attributes()->type == "1") {
+		$temps.=$file->device[$i]->attributes()->name.": ".$file->device[$i]->temp." °C<br>";
+		$leistungen.=$file->device[$i]->attributes()->name.": ".(($file->device[$i]->strom)/$scale)." W<br>";
+		$verbrauch.=$file->device[$i]->attributes()->name.": ".(($file->device[$i]->verbrauch)/$scale)." kWh<br>";
 
-	$blocks.="<b>Details ".$file->device[$i]->attributes()->name." (AIN=".$file->device[$i]->attributes()->ain."):</b><br>";
-	$blocks.="Temperatur: ".$file->device[$i]->temp." °C<br>";
-	$blocks.="Leistung: ".($file->device[$i]->strom/$scale)." W<br>";
-	$blocks.="Verbrauch: ".($file->device[$i]->verbrauch/$scale)." kWh<br>";
-	$blocks.="<br>";
+		$blocks.="<b>Details ".$file->device[$i]->attributes()->name." (AIN=".$file->device[$i]->attributes()->ain."):</b><br>";
+		$blocks.="Temperatur: ".$file->device[$i]->temp." °C<br>";
+		$blocks.="Leistung: ".($file->device[$i]->strom/$scale)." W<br>";
+		$blocks.="Verbrauch: ".($file->device[$i]->verbrauch/$scale)." kWh<br>";
+		$blocks.="<br>";
+	} else if ($file->device[$i]->attributes()->type == "2") {
+		$temps.=$file->device[$i]->attributes()->name.": ".$file->device[$i]->temp." °C<br>";
+		
+		$blocks.="<b>Details ".$file->device[$i]->attributes()->name." (AIN=".$file->device[$i]->attributes()->ain."):</b><br>";
+		$blocks.="Temperatur: ".$file->device[$i]->temp." °C<br>";
+		$blocks.="<br>";
+	}
+
 }
 if ($use_blocks){
 	$output.=$blocks."<br>";
@@ -93,6 +102,9 @@ if ($use_solar_production) {
 }
 $output.='<img src="pic_energy.php" />';
 $output.='<img src="pic_temp.php" />';
+if ($use_heating_temp) {
+	$output.='<img src="pic_heating_temp.php" />';
+}
 
 if ($debug) {
 	$output.="<br><br>DEBUG:<br><br>";

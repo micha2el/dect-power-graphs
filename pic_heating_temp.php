@@ -2,7 +2,7 @@
 include("config.php");
 
 $max_temp = 35;
-$graph_name = "Temperatur";
+$graph_name = "Heizungen";
 $graph_x_axis = "Zeit";
 $graph_y_axis = "Temperatur in C";
 
@@ -20,7 +20,7 @@ $yaxis = array();
 $xaxis = array();
 
 for ($i=0;$i<sizeof($file->device);$i++){
-	if ($file->device[$i]->attributes()->type == "1") {
+	if ($file->device[$i]->attributes()->type == "2") {
 		$data = null;
 		$data = explode(",",$file->device[$i]->devicestats->temperature->stats);
 		for ($j=0;$j<sizeof($data);$j++) {
@@ -29,6 +29,11 @@ for ($i=0;$i<sizeof($file->device);$i++){
 		array_push($outputs, $data);
 		array_push($names, $file->device[$i]->attributes()->name);
 	}
+}
+
+if (sizeof($outputs)<1) {
+	array_push($outputs,array());
+	array_push($outputs,"no data");
 }
 
 for ($i=0;$i<$max_temp;$i++){
@@ -44,11 +49,8 @@ $graph->SetScale("textlin",0,$max_temp);
 $plots = array();
 for ($i=0;$i<sizeof($outputs);$i++){
 	array_push($plots, new LinePlot($outputs[$i]));
-	if (isset($colors_dect) && sizeof($colors_dect)>$i) {
-		end($plots)->SetColor($colors_dect[$i]);
-	}else{
-		end($plots)->SetColor("#".substr(md5(rand()), 0, 6));
-	}
+	end($plots)->SetColor("#".substr(md5(rand()), 0, 6));
+	#end($plots)->SetColor($colors_dect[$i]);
 	end($plots)->SetLegend($names[$i]);
 }
 for ($i=0;$i<sizeof($plots);$i++){

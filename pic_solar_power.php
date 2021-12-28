@@ -31,9 +31,11 @@ $lineCounter = 0;
 while ((-1 !== fseek($fh, $pos, SEEK_END)) && ($lineCounter < $data_size)) {
 	$char = fgetc($fh);
 	if (PHP_EOL == $char) {
-		$line_array = explode(",",$currentLine);
-		$single = substr($line_array[1],2);
-		if (is_numeric($single)) {
+		if (isset($currentLine)) {
+			$line_array = explode(",",$currentLine);
+			$single = substr($line_array[1],2);
+		}
+		if (isset($single) && is_numeric($single)) {
 			array_push($points,($single/1000));
 			array_push($dates, date("d.m H:i",((int)substr($line_array[3],2))));
 		}
