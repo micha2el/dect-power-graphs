@@ -14,7 +14,7 @@ $scale = 1000;
 $file = simplexml_load_file($datafile);
 $output = "";
 
-$output.="Ausgelesen am: ".date("d.m.Y H:i:s.", filemtime($datafile))."<br><br>";
+$output.="Ausgelesen am: ".date("d.m.Y H:i:s.", filemtime($datafile))."<br><br><a href='index_quick.php'>Quickinfo</a><br><br>";
 $temps = "<b>Temperaturen:</b><br>";
 $leistungen = "<b>Leistungen:</b><br>";
 $verbrauch = "<b>Verbrauch:</b><br>";
