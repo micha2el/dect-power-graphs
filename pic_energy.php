@@ -22,7 +22,7 @@ for ($i=0;$i<sizeof($file->device);$i++) {
 		$data = explode(",",$file->device[$i]->devicestats->power->stats);
 		$name = $file->device[$i]->attributes()->name;
 		for ($j=0;$j<sizeof($data);$j++){
-			$data[$j] = $data[$j]/100;
+			$data[$j] = doubleval($data[$j])/100;
 			if ($data[$j] < 1) $data[$j] = 0;
 		}
 		array_push($outputs, $data);

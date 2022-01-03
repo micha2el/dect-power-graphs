@@ -24,7 +24,7 @@ for ($i=0;$i<sizeof($file->device);$i++){
 		$data = null;
 		$data = explode(",",$file->device[$i]->devicestats->temperature->stats);
 		for ($j=0;$j<sizeof($data);$j++) {
-			$data[$j] = $data[$j]/10;
+			$data[$j] = doubleval($data[$j])/10;
 		}
 		array_push($outputs, $data);
 		array_push($names, $file->device[$i]->attributes()->name);
