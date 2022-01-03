@@ -23,7 +23,6 @@ $use_heating_temp = false;
 $show_energy_consumption = false;
 $use_blocks = false;
 $datafile = "dect_data/dect.xml";
-$number_of_devices = 4; 
 $colors_dect = array("blue","green","black","red");
 $data_smart = $basedir."/smart_data/smart_meter_power_history.data";
 $data_smart_power = $basedir."/smart_data/smart_meter_power.data";

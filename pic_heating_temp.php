@@ -49,8 +49,11 @@ $graph->SetScale("textlin",0,$max_temp);
 $plots = array();
 for ($i=0;$i<sizeof($outputs);$i++){
 	array_push($plots, new LinePlot($outputs[$i]));
-	end($plots)->SetColor("#".substr(md5(rand()), 0, 6));
-	#end($plots)->SetColor($colors_dect[$i]);
+	if (isset($colors_dect) && sizeof($colors_dect)>$i) {
+		end($plots)->SetColor($colors_dect[$i]);
+	}else {
+		end($plots)->SetColor("#".substr(md5(rand()), 0, 6));
+	}
 	end($plots)->SetLegend($names[$i]);
 }
 for ($i=0;$i<sizeof($plots);$i++){
