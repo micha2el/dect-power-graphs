@@ -110,7 +110,7 @@ if ($debug) {
 	$output.="<br><br>DEBUG:<br><br>";
 	$output.=print_r($file,true);
 }
-echo "<html><head>\n<meta http-equiv=\"refresh\" content=\"30\">\n</head><body>\n";
+echo "<html><head>\n<meta http-equiv=\"refresh\" content=\"".$chart_view_refresh."\">\n</head><body>\n";
 echo $output."</body></html>";
 
 

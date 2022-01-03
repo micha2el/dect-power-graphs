@@ -117,7 +117,7 @@ for ($i=0;$i<sizeof($file->device);$i++){
 
 $output.="<font style='font-size:10vw;'><a href='index.php'>See charts...</a></font>";
 
-echo "<html><head>\n<meta http-equiv=\"refresh\" content=\"2\">\n";
+echo "<html><head>\n<meta http-equiv=\"refresh\" content=\"".$quick_view_refresh."\">\n";
 echo "<style>\n";
 echo ".roundedTable{border-radius: 20px 20px 20px 20px;border: 1px solid #000;border-spacing: 0;width: 100%;}\n";
 echo ".roundedTable tr:first-child td:first-child {border-top-left-radius: 19px;}\n";
