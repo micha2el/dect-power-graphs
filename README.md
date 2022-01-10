@@ -23,13 +23,13 @@ The following graphs are avaiable in `index.php`:
 
 If you have an outlet connected to a solar system the following graphs will be possible (if configurated accordingly):
 * energy output in W (24 hours)
-![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solor_power_daily.png?raw=true)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solar_power_daily.png?raw=true)
 * energy output in W (7days)
-![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solor_power.png?raw=true)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solar_power.png?raw=true)
 * accumulated energy generation in kWh per day (31days)
-![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solor_production.png?raw=true)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solar_production.png?raw=true)
 * accumulated energy generation in kWh per month (12 months)
-![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solor_production_monthly.png?raw=true)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solar_production_monthly.png?raw=true)
 
 If you have a smart meter and the data is reported properly (see [read-smartmeter](https://github.com/micha2el/read-smartmeter)) you can see the following graphs - again if configured properly (and please keep in mind that this will change the display of the solar input outlet):
 * smart meter energy consumption (24 hours)
