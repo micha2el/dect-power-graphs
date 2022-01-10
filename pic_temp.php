@@ -20,7 +20,7 @@ $yaxis = array();
 $xaxis = array();
 
 for ($i=0;$i<sizeof($file->device);$i++){
-	if ($file->device[$i]->attributes()->type == "1") {
+	if ($file->device[$i]->attributes()->type == "1" || $file->device[$i]->attributes()->type == "4") {
 		$data = null;
 		$data = explode(",",$file->device[$i]->devicestats->temperature->stats);
 		for ($j=0;$j<sizeof($data);$j++) {
