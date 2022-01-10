@@ -11,22 +11,33 @@ There is support for the following devices in `index_quick.php`:
 * Fritz!Dect 440 (temperature, battery)
 * Han-Fun Blinds (e.g. RolloTron Dect 1213 --> level indicator)
 
-The following devices information will be presentes in `index.php`:
-* Fritz!Dect 200 (temperature graph, current energy consumption graph, accumulated energy consumption graph)
-* Fritz!Dect 210 (temperature graph, current energy consumption graph, accumulated energy consumption graph)
-* Fritz!Dect 301 (temperature graph)
-* Fritz!Dect 440 (temperature graph)
+The following graphs are avaiable in `index.php`:
+* current energy consumption for last 24 hours (Fritz!Dect 200, Fritz!Dect 210)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_energy_current.png?raw=true)
+* accumulated energy consumption for last 14 days (Fritz!Dect 200, Fritz!Dect 210)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_verbrauch.png?raw=true)
+* accumulated energy consumption for last 12 months (Fritz!Dect 200, Fritz!Dect 210)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_verbrauch_monthly.png?raw=true)
+* temperature graph for last 24 hours (Fritz!Dect 200, Fritz!Dect 210, Fritz!Dect 440 and in seprated chart Fritz!Dect 330)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_temp.png?raw=true)
 
-If you have an outlet connected to a solar system `index.php` is able to present the following graphs (if configurated accordingly):
+If you have an outlet connected to a solar system the following graphs will be possible (if configurated accordingly):
 * energy output in W (24 hours)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solor_power_daily.png?raw=true)
 * energy output in W (7days)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solor_power.png?raw=true)
 * accumulated energy generation in kWh per day (31days)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solor_production.png?raw=true)
 * accumulated energy generation in kWh per month (12 months)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_solor_production_monthly.png?raw=true)
 
-If you have a smart meter and the data is reported properly (see https://github.com/micha2el/read-smartmeter) you can use `index.php` to present that data as well:
+If you have a smart meter and the data is reported properly (see [read-smartmeter](https://github.com/micha2el/read-smartmeter)) you can see the following graphs - again if configured properly (and please keep in mind that this will change the display of the solar input outlet):
 * smart meter energy consumption (24 hours)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_smart.png?raw=true)
 * smart meter accumulated energy consumption per day (display of energy consumption, energy output and energy input)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_energy_consumption_daily.png?raw=true)
 * smart meter accumulated energy consumption per month (display of energy consumption, energy output and energy input)
+![Graph Example](https://github.com/micha2el/power-graphs/blob/main/documentation/readme_pic_energy_consumption_monthly.png?raw=true)
 
 ## Getting started
 

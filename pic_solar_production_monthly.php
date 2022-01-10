@@ -3,7 +3,7 @@
 include("config.php");
 
 $scale = 1000;
-$graph_scale = 25;
+$graph_scale = 30;
 $graph_name = "Stromerzeugung";
 $graph_x_axis = "Zeit";
 $graph_y_axis = "Stromerzeugung in kWh";
