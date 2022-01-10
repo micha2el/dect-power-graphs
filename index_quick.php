@@ -29,6 +29,7 @@ $str_boost_active = "Boost aktiv";
 $str_current_consumption = "Aktueller Strombedarf";
 $str_total_consumption = "Gesamtverbrauch";
 $str_power_input = "Einspeisung";
+$str_hum = "Luftfeuchtigkeit";
 $str_on = "An";
 $str_off = "Aus";
 
@@ -51,9 +52,9 @@ function createBlindsInner($level) {
 	return "<font style='font-size:4vw;'>".$str_blinds_level.":</font>".$level." %";
 }
 
-function createButtonInner($temp,$battery="?") {
-	global $str_temp,$str_battery;
-	return "<font styles='font-size:4vw;'>".$str_temp.":</font>".$temp." °C</font> <font style='font-size:4vw;'>".$str_battery.": </font><font style='font-size:6vw;'>".intval($battery/10)."/10</font>";
+function createButtonInner($temp,$battery="?",$hum="?") {
+	global $str_temp,$str_battery,$str_hum;
+	return "<font style='font-size:4vw;'>".$str_temp.":</font>".$temp." °C</font><br><font style='font-size:4vw;'>".$str_hum.":</font>".$hum." %<br><font style='font-size:4vw;'>".$str_battery.": </font><font style='font-size:6vw;'>".intval($battery/10)."/10</font>";
 }
 
 function createHeatingInner($temp,$tsoll,$wopen,$wopentime="0",$battery="?",$boost="0",$boosttime="0"){
@@ -118,7 +119,7 @@ for ($i=0;$i<sizeof($file->device);$i++){
 	} else if ($file->device[$i]->attributes()->type == "31") {
 		$output.=createSquare($str_blinds.": <font style='font-size:8vw;'>".$file->device[$i]->attributes()->name."</font>",createBlindsInner($file->device[$i]->level),"darkseagreen","black");
 	} else if ($file->device[$i]->attributes()->type == "4") {
-		$output.=createSquare($str_button.": <font style='font-size:8vw;'>".$file->device[$i]->attributes()->name."</font>",createButtonInner($file->device[$i]->temp,$file->device[$i]->battery),"lightgrey","black");
+		$output.=createSquare($str_button.": <font style='font-size:8vw;'>".$file->device[$i]->attributes()->name."</font>",createButtonInner($file->device[$i]->temp,$file->device[$i]->battery,$file->device[$i]->humidity),"lightgrey","black");
 	}
 
 }
