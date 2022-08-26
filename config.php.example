@@ -55,6 +55,18 @@ $colors = array("green","blue","red");
 $graph_energy_y_scale = 15;
 $graph_energy_monthly_y_scale = 300;
 
+########################################################################################
+# kostal inverter data file
+########################################################################################
+$use_inverter = true;
+$home_specials = array("116300186781","116300186042","116300214431");
+$inverter_data = $basedir."/inverter_data/inv.data";
+
+#########################################################################################
+# use psql ? 
+########################################################################################
+$use_psql = true;
+$hostString="host=localhost port=5432 dbname=dbname user=username password=password";
 
 ########################################################################################
 # no configuration below - automatic variable generation !!!

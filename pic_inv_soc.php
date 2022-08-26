@@ -2,11 +2,13 @@
 
 include("config.php");
 
-$graph_name = "Verbrauch Smartmeter (heute)";
+$hostString="host=localhost port=5432 dbname=smarthome user=mila password=mila2009";
+
+$graph_name = "Batterie Ladung (24h)";
 $graph_x_axis = "Zeit";
-$graph_y_axis = "Leistung in W";
+$graph_y_axis = "Ladung in %";
 $data_size = 86400;
-$points_scale_factor = 6;
+$points_scale_factor = 5;
 
 ########################################################################################
 # no config below
@@ -21,49 +23,29 @@ $data = array();
 $yaxis = array();
 $xaxis = array();
 
+$fh = fopen($data_smart,"r");
 $points = array();
 $dates = array();
 $zero_line = array();
 $zero_line_dates = array();
 
-if ($use_psql) {
-	$conn = pg_connect($hostString);
-	$query=pg_query($conn,"select date_trunc('minute',zeitpunkt) as zeitpunkt,avg(momentleistung) from smartmeter_momentleistung where zeitpunkt > now() - interval '24 hours' group by 1 order by 1;");
-	if ($query){
-		while ($row = pg_fetch_row($query)) {
-			array_push($points,$row[1]);
-			array_push($dates,$row[0]);
-	        }
-	}
-	pg_close($conn);
-	for ($i=sizeof($points)-1;$i>0;$i=$i-1){
-        	array_push($data,$points[$i]);
-	        array_push($xaxis,$dates[$i]);
-        	array_push($zero_line, 0);
-	}
-}else{
-	$fh = fopen($data_smart,"r");
-	while ($line = fgets($fh)) {
-		$line_array = explode(";",$line);
-		$single = (int)substr($line_array[1],2);
-		if (is_numeric($single)) {
-			array_push($points,$single);
-			$single_date = ((int)substr(substr($line_array[0],2),0,10));
-			array_push($dates,$single_date);
-			if (sizeof($zero_line_dates) == 0){
-				array_push($zero_line_dates, $single_date);
-				array_push($zero_line, 0);
-			}
-		}
-	}
-	fclose($fh);
-	$date_range = time()-$data_size;
-	// only allow last day
-	for ($i=sizeof($points)-1;((int)$dates[$i])>$date_range;$i=$i-$points_scale_factor){
-		array_push($data,$points[$i]);
-		array_push($xaxis,date('d-m-Y H:i:s', (int)$dates[$i]));
-		array_push($zero_line, 0);
-	}
+$conn = pg_connect($hostString);
+$query=pg_query($conn,"select * from inverter_stat where zeitpunkt > now() - interval '24 hours' order by zeitpunkt asc;");
+
+if ($query){
+	while ($row = pg_fetch_row($query)) {
+		array_push($points,$row[6]);
+		array_push($dates, substr($row[0],0,strpos($row[0],".")));
+        }
+}
+pg_close($conn);
+
+$date_range = time()-$data_size;
+// only allow last day
+for ($i=sizeof($points)-1;$i>0;$i=$i-1){
+	array_push($data,$points[$i]);
+	array_push($xaxis,$dates[$i]);
+	array_push($zero_line, 0);
 }
 $counter=0;
 for ($i=-1200;$i<7000;$i++){
@@ -85,7 +67,7 @@ $graph->title->Set($graph_name);
 $graph->xaxis->title->Set($graph_x_axis);
 $graph->yaxis->title->Set($graph_y_axis);
 $graph->xaxis->SetTickLabels($xaxis);
-$graph->xaxis->setTextTickInterval(($use_psql?30:(int)(1500/$points_scale_factor)));
+$graph->xaxis->setTextTickInterval($points_scale_factor);
 $graph->xaxis->SetTitleMargin(110);
 $graph->xaxis->SetLabelAngle(90);
 $graph->xaxis->SetPos("min");
