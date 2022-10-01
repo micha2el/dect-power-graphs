@@ -7,6 +7,8 @@ include("config.php");
 ########################################################################################
 $debug = false;
 $scale = 1000;
+$links = array("index_quick.php","index_tables.php");
+$links_names = array("Quickinfo","Tables");
 
 ########################################################################################
 ## no more config below
@@ -21,7 +23,10 @@ if (isset($_GET['charts']) && strcmp($_GET['charts'],"yes")==0){
 	$show_inverter = false;
 }
 
-$output.="Ausgelesen am: ".date("d.m.Y H:i:s.", filemtime($datafile))."<br><br><a href='index_quick.php'>Quickinfo</a><br>";
+$output.="Ausgelesen am: ".date("d.m.Y H:i:s.", filemtime($datafile))."<br><br>";
+for ($i=0;$i<sizeof($links);$i++){
+	$output.="<a href='".$links[$i]."'>".$links_names[$i]."</a><br>\n";
+}
 if ($show_charts){
 	$output.="<a href='".$_SERVER["PHP_SELF"]."'>back</a><br><br>";
 }else{

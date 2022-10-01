@@ -45,12 +45,23 @@ if ($use_psql) {
 			array_push($xaxis,$row[0]);
 	        }
 	}
-	$query=pg_query($conn,"select cast(date_trunc('month',zeitpunkt) as date),sum(w_pv),max(w_pv_small),sum(home_from_pv),sum(home_from_bat),sum(co) from inverter_stat_daily where date_trunc('month',zeitpunkt)=date_trunc('month',now()) group by 1;");
-	if ($query){
+	$query=pg_query($conn,"select cast(date_trunc('month',zeitpunkt) as date),w_pv,w_pv_small,home_from_pv,home_from_bat,co from inverter_stat where date_trunc('month',zeitpunkt)=date_trunc('month',now()) order by zeitpunkt desc limit 1;");
+	if ($query) {
 		$row = pg_fetch_row($query);
+		$w_pv_moment = $row[1]/1000;
 		array_push($xaxis,$row[0]);
-		array_push($w_pv,$row[1]/1000);
 		array_push($w_pv_small,$row[2]/1000);
+		$query=pg_query($conn,"select cast(date_trunc('month',zeitpunkt) as date),sum(w_pv),max(w_pv_small),sum(home_from_pv),sum(home_from_bat),sum(co) from inverter_stat_daily where date_trunc('month',zeitpunkt)=date_trunc('month',now()) group by 1;");
+		if ($query){
+			$row = pg_fetch_row($query);
+			array_push($w_pv,$w_pv_moment+($row[1]/1000));
+		}else{
+			array_push($w_pv,$w_pv_moment);
+		}
+	}else{
+		array_push($xaxis,"now");
+		array_push($w_pv,0);
+		array_push($w_pv_small,0);
 	}
 	$query=pg_query($conn,"select * from smartmeter_einspeisung order by zeitpunkt desc limit 1;");
 	if ($query){
@@ -64,10 +75,12 @@ if ($use_psql) {
 	}
 	pg_close($conn);
 	for ($i=1;$i<sizeof($xaxis);$i++){
-		array_push($data3,($verbrauch[$i]-$verbrauch[$i-1]));
+		$verb = ($verbrauch[$i]-$verbrauch[$i-1]);
+		if ($verb < 1) $verb = 0;
+		array_push($data3,$verb);
 		array_push($data,($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i]));
 		array_push($data2,ceil($einspeise[$i]-$einspeise[$i-1]));
-		array_push($data4,(int)(($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i])-($einspeise[$i]-$einspeise[$i-1])));
+		array_push($data4,(($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i])-($einspeise[$i]-$einspeise[$i-1])));
 	}
 	array_shift($xaxis);
 }else{
@@ -218,6 +231,16 @@ $data2 = array_reverse($data2);
 $data3 = array_reverse($data3);
 $data4 = array_reverse($data4);
 $xaxis = array_reverse($xaxis);
+
+if (1==2) {
+	for ($i=0;$i<sizeof($data);$i++){
+		echo $xaxis[$i].":<br>";
+		echo "&nbsp;&nbsp;&nbsp;".$data[$i]."<br>";
+		echo "&nbsp;&nbsp;&nbsp;".$data2[$i]."<br>";
+		echo "&nbsp;&nbsp;&nbsp;".$data3[$i]."<br>";
+		echo "&nbsp;&nbsp;&nbsp;".$data4[$i]."<br>";
+	}
+}
 
 // Create the graph. These two calls are always required
 $graph = new Graph(1000,300,"auto");
