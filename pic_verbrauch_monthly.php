@@ -115,6 +115,7 @@ for ($z=0;$z<sizeof($current_files);$z++) {
 
 // Create the graph. These two calls are always required
 $graph = new Graph(1000,300,"auto");
+$graph->ClearTheme();
 $graph->SetScale("textlin",0,$graph_scale);
 $graph->yscale->ticks->Set($graph_y_big_tick,$graph_y_small_tick);
 

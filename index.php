@@ -7,6 +7,7 @@ include("config.php");
 ########################################################################################
 $debug = false;
 $scale = 1000;
+$battery_min = 10;
 $links = array("index_quick.php","index_tables.php");
 $links_names = array("Quickinfo","Tables");
 
@@ -51,16 +52,16 @@ function createDCContainer($dc,$dc_small){
 	$ret.='</g>';
 	return $ret;
 }
-function createBatterieContainer($bat,$soc,$cycles,$bat_cap){
+function createBatterieContainer($bat,$soc,$cycles,$bat_cap,$bat_min,$fchargecap){
 	if ($bat<0){
 		$color="green";
-		$est_time=(int)ceil($bat_cap*(100-$soc)/100/abs($bat)*60);
+		$est_time=(int)ceil($bat_cap*(100-$soc-$bat_min)/100/abs($bat)*60);
 	}else{
 		$color="orange";
 		$est_time=(int)ceil($bat_cap*($soc)/100/abs($bat)*60);
 	}
 	if ($est_time>2880){
-		$est_time="&#62; 2 Tage";
+		$est_time="&infin;";
 	}else if ($est_time>120){
 		$whole = floor($est_time/60);
 		$fraction = (int)ceil((($est_time/60)-$whole)*60);
@@ -71,9 +72,10 @@ function createBatterieContainer($bat,$soc,$cycles,$bat_cap){
 	$ret='<g _ngcontent-c4="" id="BatteryContainer">';
 	$ret.='<g _ngcontent-c4="" id="gid_3cee6746_10"><polyline _ngcontent-c4="" class="svg-'.$color.'-stroke" fill="none" id="line-battery" points="15,85 15,55 50,55" stroke-width="3"></polyline></g>';
 	$ret.='<circle _ngcontent-c4="" cx="15" cy="85" id="canvas-battery" r="14" class="svg-'.$color.'"></circle>';
+	$ret.='<text _ngcontent-c4="" fill="#ffffff" font-family="Roboto, Verdana" font-size="3.5" id="text-battery-cap" text-anchor="middle"  x="15" y="96">'.$bat_cap.' Wh</text>';
 	$ret.='<svg _ngcontent-c4="" height="25" id="shape-battery" viewBox="0 0 85.04 85.04" width="25" x="2.5" y="72.5"><path _ngcontent-c4="" d="M66.98,23.292h-4.813v-4.892H48.871v4.892H36.206v-4.892H22.909v4.892h-4.85c-3.068,0-5.579,2.511-5.579,5.573v32.203c0,3.064,2.511,5.566,5.579,5.566L66.98,66.64c3.064,0,5.578-2.502,5.578-5.572V28.864C72.559,25.802,70.045,23.292,66.98,23.292z M35.875,48.401h-6.391v6.419h-4.096v-6.419h-6.394V44.33h6.394v-6.387h4.096v6.387h6.391V48.401z M64.344,48.028h-4.836h-3.863h-4.83v-4.213h4.83h3.863h4.836V48.028z" fill="#ffffff"></path></svg>';
 	$ret.='<svg _ngcontent-c4="" height="6" id="gid_3cee6746_15" width="16" x="18" y="52"><g _ngcontent-c4="" id="gid_3cee6746_14"><rect _ngcontent-c4="" class="svg-'.$color.'" height="6" id="canvas-text-battery" rx="2" ry="2" width="16" x="0" y="0"></rect><text _ngcontent-c4="" fill="#ffffff" font-family="Roboto, Verdana" font-size="3.5" id="text-battery" text-anchor="middle" x="8" y="4">'.$bat.'<tspan _ngcontent-c4="" id="gid_3cee6746_15"> W</tspan></text></g></svg>';
-	$ret.='<svg _ngcontent-c4="" height="6" id="gid_3cee6747_11" width="26" x="20" y="72"><g _ngcontent-c4="" id="gid_3cee6747_14"><rect _ngcontent-c4="" class="svg-grey" height="6" id="canvas-text-battery-soc" rx="2" ry="2" width="26" x="0" y="0"></rect><text _ngcontent-c4="" fill="#ffffff" font-family="Roboto, Verdana" font-size="3.5" id="text-battery-soc" text-anchor="middle" x="13" y="4">'.$soc.'<tspan _ngcontent-c4="" id="gid_3cee6747_15"> %</tspan></text></g></svg>';
+	$ret.='<svg _ngcontent-c4="" height="6" id="gid_3cee6747_11" width="26" x="20" y="72"><g _ngcontent-c4="" id="gid_3cee6747_14"><rect _ngcontent-c4="" class="svg-grey" height="6" id="canvas-text-battery-soc" rx="2" ry="2" width="26" x="0" y="0"></rect><text _ngcontent-c4="" fill="#ffffff" font-family="Roboto, Verdana" font-size="3.5" id="text-battery-soc" text-anchor="middle" x="13" y="4">'.$soc.'%'.($soc<40?' ('.$bat_min.'%)':'').'<tspan _ngcontent-c4="" id="gid_3cee6747_15"></tspan></text></g></svg>';
 	$ret.='<svg _ngcontent-c4="" height="6" id="gid_3cee6748_11" width="26" x="20" y="80"><g _ngcontent-c4="" id="gid_3cee6748_14"><rect _ngcontent-c4="" class="svg-grey" height="6" id="canvas-text-battery-cycles" rx="2" ry="2" width="26" x="0" y="0"></rect><text _ngcontent-c4="" fill="#ffffff" font-family="Roboto, Verdana" font-size="3.5" id="text-battery-cycles" text-anchor="middle" x="13" y="4">'.$cycles.'<tspan _ngcontent-c4="" id="gid_3cee6748_15"> Cycles</tspan></text></g></svg>';
 	$ret.='<svg _ngcontent-c4="" height="6" id="gid_3cee6747_11" width="26" x="20" y="88"><g _ngcontent-c4="" id="gid_3cee6747_14"><rect _ngcontent-c4="" class="svg-'.($bat>0?'orange-light':'green-light').'" height="6" id="canvas-text-battery-time" rx="2" ry="2" width="26" x="0" y="0"></rect><text _ngcontent-c4="" fill="#ffffff" font-family="Roboto, Verdana" font-size="3.5" id="text-battery-time" text-anchor="middle" x="13" y="4">'.$est_time.'<tspan _ngcontent-c4="" id="gid_3cee6747_15"></tspan></text></g></svg>';
 	if ($bat>0){
@@ -115,7 +117,11 @@ function createHomeContainer($home,$specials){
 	$ret.='</svg>';
 	if (isset($specials) && is_array($specials)){
 		for ($i=0;$i<sizeof($specials);$i++){
-			$ret.='<svg _ngcontent-c4="" height="6" id="gid_3cee6747_11" width="26" x="55" y="'.(72+($i*8)).'"><g _ngcontent-c4="" id="gid_3cee6747_14"><rect _ngcontent-c4="" class="svg-grey" height="6" id="canvas-text-home-special_'.$i.'" rx="2" ry="2" width="26" x="0" y="0"></rect><text _ngcontent-c4="" fill="#ffffff" font-family="Roboto, Verdana" font-size="3.5" id="text-home-special-'.$i.'" text-anchor="middle" x="13" y="4">'.$specials[$i].'<tspan _ngcontent-c4="" id="gid_3cee6747_15"></tspan></text></g></svg>';
+			if ($i<3){
+				$ret.='<svg _ngcontent-c4="" height="6" id="gid_3cee6747_11" width="20" x="61" y="'.(72+($i*8)).'"><g _ngcontent-c4="" id="gid_3cee6747_14"><rect _ngcontent-c4="" class="svg-grey" height="6" id="canvas-text-home-special_'.$i.'" rx="2" ry="2" width="20" x="0" y="0"></rect><text _ngcontent-c4="" fill="#ffffff" font-family="Roboto, Verdana" font-size="2.5" id="text-home-special-'.$i.'" text-anchor="middle" x="10" y="4">'.$specials[$i].'<tspan _ngcontent-c4="" id="gid_3cee6747_15"></tspan></text></g></svg>';
+			}else{
+				$ret.='<svg _ngcontent-c4="" height="6" id="gid_3cee6747_11" width="20" x="85" y="'.(72+(($i-3)*8)).'"><g _ngcontent-c4="" id="gid_3cee6747_14"><rect _ngcontent-c4="" class="svg-grey" height="6" id="canvas-text-home-special_'.$i.'" rx="2" ry="2" width="20" x="0" y="0"></rect><text _ngcontent-c4="" fill="#ffffff" font-family="Roboto, Verdana" font-size="2.5" id="text-home-special-'.$i.'" text-anchor="middle" x="10" y="4">'.$specials[$i].'<tspan _ngcontent-c4="" id="gid_3cee6747_15"></tspan></text></g></svg>';
+			}
 		}
 	}
 	$ret.='<svg _ngcontent-c4="" height="10" id="indicator-home" viewBox="0 0 15 15" width="10" x="80" y="58"><g _ngcontent-c4="" id="indicator-home-rot" transform="rotate(0 7.5 7.5)"><polygon _ngcontent-c4="" fill="#ffffff" points="1.5,0.5 13.5,0.5 7.5,15"></polygon><polygon _ngcontent-c4="" class="svg-orange-fill" id="indicator-home-color" points="2,0.0 13,0.0 7.5,13.5"></polygon></g></svg>';
@@ -123,11 +129,11 @@ function createHomeContainer($home,$specials){
 	return $ret;
 }
 
-function createInverterPicture($dc,$dc_small,$bat,$grid,$home,$soc,$cycles,$bat_cap,$specials){
+function createInverterPicture($dc,$dc_small,$bat,$grid,$home,$soc,$cycles,$bat_cap,$bat_min,$fchargecap,$specials){
 	$ret="<div _ngcontent-c4='' class='' style='width:1000px;'><div _ngcontent-c4='' id='test'></div>";
-	$ret.='<svg _ngcontent-c4="" class="mainsvg" height="75%" id="liveSVG" viewBox="0 0 100 100" width="100%">';
+	$ret.='<svg _ngcontent-c4="" class="mainsvg" height="75%" id="liveSVG" viewBox="0 0 105 100" width="100%">';
 	$ret.=createDCContainer($dc,$dc_small);
-	$ret.=createBatterieContainer($bat,$soc,$cycles,$bat_cap);
+	$ret.=createBatterieContainer($bat,$soc,$cycles,$bat_cap,$bat_min,$fchargecap);
 	$ret.=createGridContainer($grid);
 	$ret.=createHomeContainer($home,$specials);
 	$ret.='<circle _ngcontent-c4="" cx="50" cy="50" id="canvas-inverter" r="14" class="svg-green"></circle>';
@@ -165,6 +171,7 @@ if ($use_inverter) {
 		if (strcmp(trim($value_pair[0]),"P_pv1")==0) $inv_pv1_p=$value_pair[1];
 		if (strcmp(trim($value_pair[0]),"P_pv2")==0) $inv_pv2_p=$value_pair[1];
 		if (strcmp(trim($value_pair[0]),"WorkCapacity")==0) $inv_bat_cap=$value_pair[1];
+		if (strcmp(trim($value_pair[0]),"FullChargeCap_E")==0) $inv_charge_cap=$value_pair[1];
 	}
 	$inverter.="Verbrauch von Wechselrichter erfüllt: ".substr($inv_home_own,0,strpos($inv_home_own,"."))." W<br>";
 	$inverter.=" -> ".substr($inv_home_bat,0,strpos($inv_home_bat,".")). " W aus der Batterie<br>";
@@ -174,6 +181,8 @@ if ($use_inverter) {
 	$inverter.=" -> Lade Batterie mit ".substr($inv_pv_bat,0,strpos($inv_pv_bat,"."))." W und entlade mit ".substr($inv_bat_p,0,strpos($inv_bat_p,"."))." W<br>";
 	$inverter.=" -> Ladestand: ".$inv_soc."%<br>";
 	$inverter.=" -> Ladecyclen: ".$inv_cycles." <br>";
+	$inverter.=" -> Kapazität: ".$inv_bat_cap." Wh<br>";
+	$inverter.=" -> ChargeCap: ".$inv_charge_cap."<br>";
 	$inverter.="<br>";
 	$dc=(int)ceil($inv_dc_p);
 	$pv=(int)ceil($inv_home_pv);
@@ -182,6 +191,7 @@ if ($use_inverter) {
 	$home_p=(int)ceil($inv_home_p);
 	$pv_bat=(int)ceil($inv_pv_bat);
 	$bat_cap=(int)ceil($inv_bat_cap);
+	$fchargecap=(int)ceil($inv_charge_cap);
 	$grid=(int)ceil($inv_home_grid);
 	$home=(int)ceil($inv_home_own);
 	$soc=(int)ceil($inv_soc);
@@ -256,7 +266,7 @@ for ($i=0;$i<sizeof($file->device);$i++){
 }
 if ($use_smart_meter && $use_inverter && $show_inverter){
 	#$output.=createInverterPicture($dc,$pv_small,$bat,$grid,(($dc-$pv_bat+$home_bat)+$pv_small+$grid),$soc,$cycles,$specials)."<br><br>";
-	$output.=createInverterPicture($pv_p,$pv_small,$bat,$grid,($home_p>0?$home_p+$pv_small:$home_p),$soc,$cycles,$bat_cap,$specials)."<br><br>";
+	$output.=createInverterPicture($pv_p,$pv_small,$bat,$grid,($home_p>0?$home_p+$pv_small:$home_p),$soc,$cycles,$bat_cap,$battery_min,$fchargecap,$specials)."<br><br>";
 }
 
 if ($use_blocks){
@@ -292,6 +302,9 @@ if ($use_solar_power) {
 if ($use_solar_production) {
 	$charts.='<img src="pic_solar_production.php" />';
 	$charts.='<img src="pic_solar_production_monthly.php" />';
+}
+if ($use_warm_water) {
+	$charts.='<img src="pic_warm_water.php" />';
 }
 $charts.='<img src="pic_energy.php" />';
 $charts.='<img src="pic_temp.php" />';

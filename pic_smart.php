@@ -71,6 +71,7 @@ for ($i=-1200;$i<7000;$i++){
 	$counter++;
 }
 $graph = new Graph(1000,400,"auto");
+$graph->ClearTheme();
 $graph->SetScale("textint");
 
 $lineplot0=new LinePlot($data);
@@ -98,6 +99,7 @@ $graph->ygrid->Show(true,false);
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->title->SetFont(FF_FONT1,FS_BOLD);
+$graph->ygrid->SetFill(true,'#FEFEFE@0.5','#EDEDED@0.5');
 
 $graph->SetShadow();
 $graph->Stroke();

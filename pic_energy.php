@@ -29,7 +29,6 @@ for ($i=0;$i<sizeof($file->device);$i++) {
 		array_push($names, $name);
 	}
 }
-
 $yaxis = array();
 $xaxis = array();
 
@@ -42,6 +41,7 @@ for ($i=0;$i<sizeof($outputs[0]);$i++){
 
 // Create the graph. These two calls are always required
 $graph = new Graph(1000,300,"auto");
+$graph->ClearTheme();
 $graph->SetScale("textlog");
 
 // Create the linear plots and add to graph
@@ -61,6 +61,7 @@ for ($i=0;$i<sizeof($plots);$i++){
 
 $graph->img->SetMargin(60,140,30,60);
 $graph->title->Set($graph_name);
+$graph->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->title->Set($graph_x_axis);
 $graph->yaxis->title->Set($graph_y_axis);
 $graph->yaxis->SetTickLabels($yaxis);
@@ -70,11 +71,12 @@ $graph->yaxis->SetColor("red");
 $graph->yaxis->SetWeight(2);
 $graph->yaxis->SetTitleMargin(35);
 $graph->xaxis->SetTitleMargin(15);
-$graph->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->title->SetFont(FF_FONT1,FS_BOLD);
+$graph->ygrid->SetFill(true,'#FEFEFE@0.5','#EDEDED@0.5');
 
 $graph->SetShadow();
-$graph->legend->Pos(0.035,0.5,"right","center");
+$graph->legend->Pos(0.025,0.5,"right","center");
+$graph->legend->SetLayout(0);
 $graph->Stroke();
 ?>

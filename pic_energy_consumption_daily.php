@@ -203,7 +203,8 @@ if ($use_psql){
 }
 
 // Create the graph. These two calls are always required
-$graph = new Graph(1000,300,"auto");
+$graph = new Graph(1000,350,"auto");
+$graph->ClearTheme();
 $graph->SetScale("textlin");
 
 // Create the linear plot
@@ -221,36 +222,40 @@ $data4 = array_slice($data4,0,$maxticks);
 $xaxis = array_slice($xaxis,0,$maxticks);
 
 $barplot=new BarPlot($data);
-$barplot->SetWidth(2);
+$barplot->SetWidth(1);
 $barplot->SetFillColor("navy");
 $barplot->SetColor("navy");
-$barplot->ShowValue(true);
-$barplot->SetValueFormat("%01.2f",90);
+$barplot->value->Show();
+$barplot->value->SetFormat("%01.0f kWh",90);
+$barplot->value->SetAngle(90);
 $barplot2=new BarPlot($data2);
 $barplot2->SetWidth(1);
 $barplot2->SetFillColor("green");
 $barplot2->SetColor("green");
-$barplot2->ShowValue(true);
-$barplot2->SetValueFormat("%01.2f",90);
+$barplot2->value->Show();
+$barplot2->value->SetFormat("%01.0f kWh",90);
+$barplot2->value->SetAngle(90);
 $barplot3=new BarPlot($data3);
 $barplot3->SetWidth(1);
 $barplot3->SetFillColor("red");
 $barplot3->SetColor("red");
-$barplot3->ShowValue(true);
-$barplot3->SetValueFormat("%01.2f",90);
+$barplot3->value->Show();
+$barplot3->value->SetFormat("%01.0f kWh",90);
+$barplot3->value->SetAngle(90);
 $barplot4=new BarPlot($data4);
 $barplot4->SetWidth(1);
 $barplot4->SetFillColor("yellow");
 $barplot4->SetColor("yellow");
-$barplot4->ShowValue(true);
-$barplot4->SetValueFormat("%01.2f",90);
+$barplot4->value->Show();
+$barplot4->value->SetFormat("%01.0f kWh",90);
+$barplot4->value->SetAngle(90);
 
 $gbplot = new GroupBarPlot(array($barplot3,$barplot,$barplot2,$barplot4));
 // Add the plot to the graph
 #$graph->Add($barplot);
 $graph->Add($gbplot);
 
-$graph->img->SetMargin(60,180,30,80);
+$graph->img->SetMargin(60,140,40,90);
 $graph->title->Set($graph_name);
 $graph->xaxis->title->Set($graph_x_axis);
 $graph->yaxis->title->Set($graph_y_axis);
@@ -262,17 +267,20 @@ $graph->xaxis->SetLabelAngle(90);
 $graph->yaxis->SetTitleMargin(35);
 $graph->yaxis->SetColor("red");
 $graph->yaxis->SetWeight(2);
+$graph->yaxis->scale->SetGrace(17);
 $graph->ygrid->Show(true,false);
 
-$barplot->SetLegend("Produzierter Strom");
-$barplot2->SetLegend("Eingespeister Strom");
-$barplot3->SetLegend("Verbrauchter Strom");
-$barplot4->SetLegend("Genutzer Solarstrom");
-$graph->legend->Pos(0.01,0.5,"right","center");
+$barplot->SetLegend("Produziert");
+$barplot2->SetLegend("Eingespeist");
+$barplot3->SetLegend("Netzbezug");
+$barplot4->SetLegend("Verbrauch");
+$graph->legend->Pos(0.025,0.5,"right","center");
+$graph->legend->SetLayout(0);
 
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->xaxis->title->SetFont(FF_FONT1,FS_BOLD);
+$graph->ygrid->SetFill(true,'#FEFEFE@0.5','#EDEDED@0.5');
 
 $graph->SetShadow();
 $graph->Stroke();

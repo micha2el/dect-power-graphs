@@ -40,6 +40,7 @@ for ($i=0;$i<sizeof($outputs[0]);$i++){
 }
 
 $graph = new Graph(1000,300,"auto");
+$graph->ClearTheme();
 $graph->SetScale("textlin",0,$max_temp);
 $plots = array();
 for ($i=0;$i<sizeof($outputs);$i++){
@@ -70,9 +71,11 @@ $graph->xaxis->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->yaxis->SetColor("red");
 $graph->yaxis->SetWeight(2);
 $graph->yaxis->setTextTickInterval(1);
+$graph->ygrid->SetFill(true,'#FEFEFE@0.5','#EDEDED@0.5');
 $graph->SetShadow();
 
-$graph->legend->Pos(0.035,0.5,"right","center");
+$graph->legend->Pos(0.025,0.5,"right","center");
+$graph->legend->SetLayout(0);
 $graph->Stroke();
 ?>
 

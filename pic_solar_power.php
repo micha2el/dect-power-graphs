@@ -59,6 +59,7 @@ for ($i=sizeof($points)-1;$i>(sizeof($points)-$data_size)&&$i>-1;$i=$i-$scale_fa
 }
 
 $graph = new Graph(1000,300,"auto");
+$graph->ClearTheme();
 $graph->SetScale("textlin");
 $lineplot0=new LinePlot($data);
 $graph->Add($lineplot0);
@@ -73,6 +74,7 @@ $graph->yaxis->SetColor("red");
 $graph->yaxis->SetWeight(2);
 $graph->yaxis->setTitleMargin(35);
 $graph->xaxis->setTitleMargin(50);
+$graph->ygrid->SetFill(true,'#FEFEFE@0.5','#EDEDED@0.5');
 #$graph->yaxis->setTextTickInterval(100);
 
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
