@@ -60,11 +60,16 @@ if ($use_psql){
 		}
 	}
 	pg_close($conn);
+	// insert current daily values
 	for ($i=1;$i<sizeof($xaxis);$i++){
-		array_push($data3,($verbrauch[$i]-$verbrauch[$i-1]));
+		array_push($data3,(($verbrauch[$i]>$verbrauch[$i-1])?$verbrauch[$i]-$verbrauch[$i-1]:$verbrauch[$i]));
 		array_push($data,($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i]));
-		array_push($data2,($einspeise[$i]-$einspeise[$i-1]));
-		array_push($data4,(($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i])-($einspeise[$i]-$einspeise[$i-1])));
+		array_push($data2,(($einspeise[$i]>$einspeise[$i-1])?$einspeise[$i]-$einspeise[$i-1]:$einspeise[$i]));
+		if ($einspeise[$i]>$einspeise[$i-1]){
+			array_push($data4,(($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i])-($einspeise[$i]-$einspeise[$i-1])));
+		}else{
+			array_push($data4,(($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i])-$einspeise[$i]));
+		}
 	}
 	array_shift($xaxis);
 }else {

@@ -55,10 +55,13 @@ function createDCContainer($dc,$dc_small){
 function createBatterieContainer($bat,$soc,$cycles,$bat_cap,$bat_min,$fchargecap){
 	if ($bat<0){
 		$color="green";
-		$est_time=(int)ceil($bat_cap*(100-$soc-$bat_min)/100/abs($bat)*60);
+		$est_time=(int)ceil($bat_cap*(100-$soc)/100/abs($bat)*60);
 	}else{
 		$color="orange";
-		$est_time=(int)ceil($bat_cap*($soc)/100/abs($bat)*60);
+		if ($bat<>0)
+			$est_time=(int)ceil($bat_cap*($soc)/100/abs($bat)*60);
+		else
+			$est_time="unknown";
 	}
 	if ($est_time>2880){
 		$est_time="&infin;";
@@ -266,7 +269,7 @@ for ($i=0;$i<sizeof($file->device);$i++){
 }
 if ($use_smart_meter && $use_inverter && $show_inverter){
 	#$output.=createInverterPicture($dc,$pv_small,$bat,$grid,(($dc-$pv_bat+$home_bat)+$pv_small+$grid),$soc,$cycles,$specials)."<br><br>";
-	$output.=createInverterPicture($pv_p,$pv_small,$bat,$grid,($home_p>0?$home_p+$pv_small:$home_p),$soc,$cycles,$bat_cap,$battery_min,$fchargecap,$specials)."<br><br>";
+	$output.=createInverterPicture($pv_p,$pv_small,$bat,$grid,($home_p>0?$home_p+$pv_small:$home_p+$pv_small),$soc,$cycles,$bat_cap,$battery_min,$fchargecap,$specials)."<br><br>";
 }
 
 if ($use_blocks){
