@@ -50,6 +50,7 @@ if ($use_psql){
 	$verbrauch = array_reverse($verbrauch);
 	$xaxis = array_reverse($xaxis);
 	$query=pg_query($conn,"select cast(date_trunc('minute',t1.zeitpunkt) as date) as zeitpunkt,max(t1.einspeisung) as einspeise,max(t3.verbrauch) as verbrauch,max(t2.w_pv) as w_pv,max(t2.w_pv_small) as w_pv_small,max(t2.home_from_pv) as home_from_pv,max(t2.home_from_bat) as home_from_bat from smartmeter_einspeisung t1,inverter_stat t2,smartmeter_verbrauch t3 where date_trunc('minute',t1.zeitpunkt)=(select date_trunc('minute',zeitpunkt) from inverter_stat order by zeitpunkt desc limit 1) and date_trunc('minute',t1.zeitpunkt)=date_trunc('minute',t2.zeitpunkt) and date_trunc('minute',t1.zeitpunkt)=date_trunc('minute',t3.zeitpunkt) group by 1;");
+	// add current day values
 	if ($query){
 		while ($row = pg_fetch_row($query)) {
 			array_push($xaxis,$row[0]);
@@ -60,12 +61,12 @@ if ($use_psql){
 		}
 	}
 	pg_close($conn);
-	// insert current daily values
+	// calc daily values
 	for ($i=1;$i<sizeof($xaxis);$i++){
 		array_push($data3,(($verbrauch[$i]>$verbrauch[$i-1])?$verbrauch[$i]-$verbrauch[$i-1]:$verbrauch[$i]));
 		array_push($data,($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i]));
-		array_push($data2,(($einspeise[$i]>$einspeise[$i-1])?$einspeise[$i]-$einspeise[$i-1]:$einspeise[$i]));
-		if ($einspeise[$i]>$einspeise[$i-1]){
+		array_push($data2,(($einspeise[$i]>=$einspeise[$i-1])?$einspeise[$i]-$einspeise[$i-1]:$einspeise[$i]));
+		if ($einspeise[$i]>=$einspeise[$i-1]){
 			array_push($data4,(($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i])-($einspeise[$i]-$einspeise[$i-1])));
 		}else{
 			array_push($data4,(($w_pv_small[$i]-$w_pv_small[$i-1]+$w_pv[$i])-$einspeise[$i]));

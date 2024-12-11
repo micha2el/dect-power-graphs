@@ -56,7 +56,12 @@ if ($use_psql) {
 		if ($query){
 			// now add the daily summs to current month
 			$row = pg_fetch_row($query);
-			$w_pv_cur_month=($row[1]/1000)+($w_pv_small_cur_value-($row[2]/1000));
+			$row_value=$row[2]/1000;
+			if ($row_value>0) {
+				$w_pv_cur_month=($row[1]/1000)+($w_pv_small_cur_value-$row_value);
+			}else{
+				$w_pv_cur_month=$row[1]/1000;
+			}
 			array_push($w_pv,$w_pv_moment+$w_pv_cur_month);
 		}else{
 			array_push($w_pv,$w_pv_moment);
