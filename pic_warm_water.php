@@ -22,34 +22,44 @@ $yaxis = array();
 $xaxis = array();
 $counter = 0;
 
+$lineCount=getLines($datafile_heater);
 $fh = fopen($datafile_heater,"r");
 $points = array();
 $points_pump = array();
+$counter=0;
 while ($line = fgets($fh)) {
-	$line_array = explode(",",$line);
-	$single = substr($line_array[1],2);
-	if (is_numeric($single)) {
-		array_push($points,$single/1000);
+	if ($counter>($lineCount-$data_size)){
+		$line_array = explode(",",$line);
+		$single = substr($line_array[1],2);
+		if (is_numeric($single)) {
+			array_push($points,$single/1000);
+		}
 	}
+	$counter++;
 }
 fclose($fh);
-
+$counter=0;
 for ($i=sizeof($points)-1;$i>(sizeof($points)-$data_size)&&$i>-1;$i--){
 	array_push($data,$points[$i]);
 	array_push($xaxis,(-0.5 * 1/60 * $counter)."h");
 	$counter++;
 }
 
+$lineCount=getLines($datafile_pump);
 $fh = fopen($datafile_pump,"r");
+$counter=0;
 while ($line = fgets($fh)) {
-	$line_array = explode(",",$line);
-	$single = substr($line_array[1],2);
-	if (is_numeric($single)) {
-		array_push($points_pump,$single/1000);
+	if ($counter>($lineCount-$data_size)){
+		$line_array = explode(",",$line);
+		$single = substr($line_array[1],2);
+		if (is_numeric($single)) {
+			array_push($points_pump,$single/1000);
+		}
 	}
+	$counter++;
 }
 fclose($fh);
-
+$counter=0;
 for ($i=sizeof($points_pump)-1;$i>(sizeof($points_pump)-$data_size)&&$i>-1;$i--){
 	array_push($data_pump,$points_pump[$i]);
 	$counter++;

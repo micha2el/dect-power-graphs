@@ -82,4 +82,19 @@ for ($i=0;$i<sizeof($ains);$i++) {
 	array_push($current_files, $basedir."/dect_data/".$file_prefix_current.$ains[$i].".data");
 }
 
+function getLines($file){
+	$lineCount=0;
+	if (file_exists($file)){
+		$fh = fopen($file,"r");
+		while (!feof($fh)) {
+        		$line = fgets($fh);
+	        	if ($line !== false) {
+	        	        $lineCount++;
+		        }
+		}
+		fclose($fh);
+	}
+	return $lineCount;
+}
+
 ?>
